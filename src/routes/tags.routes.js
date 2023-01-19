@@ -3,9 +3,10 @@ const { Router } = require('express');
 const tagsRoutes = Router();
 
 const TagsController = require('../controllers/TagsController')
+const ensureAuthentitcate = require("../middlewares/ensureAuthenticate")
 
 const tagsController = new TagsController();
 
-tagsRoutes.get('/:user_id', tagsController.index);
+tagsRoutes.get('/',ensureAuthentitcate, tagsController.index);
 
 module.exports = tagsRoutes;
