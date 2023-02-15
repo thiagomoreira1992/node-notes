@@ -1,16 +1,21 @@
 require("express-async-errors")
 const migrationsRun = require("./database/sqlite/migrations")
 const AppError = require("./utils/AppError")
+const uploadConfig = require("./configs/uploads")
 
 const express = require("express");
+const cors = require("cors")
 
 //Importação de rotas
 const routes = require('./routes');
 
 const app = express();
+app.use(cors());
 
 migrationsRun();
 app.use(express.json());
+
+app.use("/files", express.static(uploadConfig.UPLOADS_FOLDER))
 
 app.use(routes);
 

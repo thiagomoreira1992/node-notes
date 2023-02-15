@@ -19,8 +19,9 @@ class UsersController {
         const { name, email, password } = req.body;
 
         const database = await sqliteConnection();
-        const checkUserExists = await database
-            .get("SELECT * FROM users WHERE (?)", [email])
+        // const checkUserExists = await database
+        //     .get("SELECT * FROM users WHERE (?)", [email])
+        const checkUserExists = await knex("users").where({email}).first()
 
         if (checkUserExists) {
             throw new AppError("Este e-mail já está em uso")
